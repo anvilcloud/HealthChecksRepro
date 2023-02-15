@@ -11,16 +11,13 @@ await Host.CreateDefaultBuilder()
     })
     .ConfigureServices((hostContext, services) => {
 
-#if true
+#if false
         //This works fine - IHealthCheckPublisher.PublishAsync is called
         services.AddHealthChecks();
 #else
         //This does not work - IHealthCheckPublisher.PublishAsync is NEVER called
         services.AddHealthChecks()
-            .AddCheck("test", () =>
-            {
-                return HealthCheckResult.Healthy("We're good");
-            });
+            .AddCheck("test", () =>HealthCheckResult.Healthy("We're good"));
 #endif
 
         services.AddSingleton<IHealthCheckPublisher, SimpleHealthCheckPublisher>();
